@@ -1,0 +1,5 @@
+{
+    "Authentication.input.email": "Identifiant",
+    "Authentication.input.password": "Mot de passe",
+    "Authentication.button.login": "Se connecter"
+}
