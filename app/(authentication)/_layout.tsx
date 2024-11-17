@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { ActivityIndicator } from 'react-native-paper';
 import Background from '../../components/Background';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -6,6 +7,7 @@ import TextInput from '../../components/TextInput';
 import { emailValidator, passwordValidator } from '../../core/utils';
 import { useAuthenticateMutation } from '@/api/authentication';
 import { useTranslation } from 'react-i18next';
+import { setItemAsync } from 'expo-secure-store';
 
 import { router } from 'expo-router';
 //import { Navigation } from '../types';
@@ -20,15 +22,21 @@ const LoginScreen = () => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const onAuthenticationSuccess = (token: string) => {
-    console.log('onAuthenticationSuccess', token);
+  const onAuthenticationSuccess = async (token: string) => {
+    await setItemAsync('secure_token', token);
     router.replace('/dashboard');
+  };
+
+  const onAuthenticationError = async (error: Error) => {
+    setEmail({ ...email, error: error.message });
   };
 
   const mutation = useAuthenticateMutation({
     onSuccess: onAuthenticationSuccess,
+    onError: onAuthenticationError,
   });
 
+  console.log('mutation', mutation.isPending);
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -74,9 +82,13 @@ const LoginScreen = () => {
         secureTextEntry
       />
 
-      <Button mode="contained" onPress={_onLoginPressed}>
-        {t('Authentication.button.login')}
-      </Button>
+      {mutation.isPending ? (
+        <ActivityIndicator />
+      ) : (
+        <Button mode="contained" onPress={_onLoginPressed}>
+          {t('Authentication.button.login')}
+        </Button>
+      )}
     </Background>
   );
 };
