@@ -39,6 +39,10 @@ export default function RootLayout() {
             name="(authentication)"
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="citiesSelector"
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="dashboard" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>

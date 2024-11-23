@@ -1,5 +1,7 @@
 {
     "Authentication.input.email": "Identifiant",
     "Authentication.input.password": "Mot de passe",
-    "Authentication.button.login": "Se connecter"
+    "Authentication.button.login": "Se connecter",
+    "CitiesSelector.title": "Villes et marchés",
+    "CitiesSelector.button.continue": "Suivant"
 }

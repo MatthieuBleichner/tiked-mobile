@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { setItemAsync } from 'expo-secure-store';
 
 import { router } from 'expo-router';
+
 //import { Navigation } from '../types';
 
 // type Props = {
@@ -24,7 +25,7 @@ const LoginScreen = () => {
 
   const onAuthenticationSuccess = async (token: string) => {
     await setItemAsync('secure_token', token);
-    router.replace('/dashboard');
+    router.replace('/citiesSelector');
   };
 
   const onAuthenticationError = async (error: Error) => {
@@ -53,6 +54,13 @@ const LoginScreen = () => {
     });
     //navigation.navigate('Dashboard');
   };
+
+  // useEffect(() => {
+  //   getItemAsync('secure_token').then((token) => {
+  //     console.log('token', token);
+  //     router.replace('/citiesSelector');
+  //   });
+  // }, []);
 
   return (
     <Background>
