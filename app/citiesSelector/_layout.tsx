@@ -1,8 +1,6 @@
 import React, { memo, useEffect } from 'react';
-import Background from '../../components/Background';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
-import RootContainer from '@/components/RootContainer';
+import { StyleSheet, View } from 'react-native';
 import Picker, { Item } from '@/components/Picker';
 import { useTranslation } from 'react-i18next';
 import { useCitiesQuery } from '@/api/cities/hooks';
@@ -51,7 +49,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <Background>
+    <View style={styles.background}>
       <View
         style={{
           display: 'flex',
@@ -98,8 +96,18 @@ const LoginScreen = () => {
           </Button>
         )}
       </View>
-    </Background>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default memo(LoginScreen);

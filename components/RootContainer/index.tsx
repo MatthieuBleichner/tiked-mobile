@@ -35,14 +35,13 @@ const makeStyles = (theme: MD3Theme) =>
       flex: 1,
       height: 300,
       width: '95%',
-      borderRadius: 5,
+      borderRadius: 10,
       backgroundColor: '#f5f5f5',
-      //backgroundColor: 'red',
+      paddingHorizontal: 20,
     },
     text: {
-      fontSize: 20,
+      fontSize: 35,
       color: theme.colors.primary,
       fontWeight: 'bold',
-      padding: 10,
     },
   });

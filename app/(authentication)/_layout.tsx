@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import { ActivityIndicator } from 'react-native-paper';
-import Background from '../../components/Background';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
@@ -10,12 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { setItemAsync } from 'expo-secure-store';
 
 import { router } from 'expo-router';
-
-//import { Navigation } from '../types';
-
-// type Props = {
-//   navigation: Navigation;
-// };
+import { View, StyleSheet } from 'react-native';
 
 const LoginScreen = () => {
   const { t } = useTranslation();
@@ -54,7 +48,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <Background>
+    <View style={styles.background}>
       <Header>TIKED</Header>
 
       <TextInput
@@ -87,13 +81,23 @@ const LoginScreen = () => {
         <Button
           mode="contained"
           onPress={_onLoginPressed}
-          style={{ width: '90%' }}
+          style={{ width: '50%' }}
         >
           {t('Authentication.button.login')}
         </Button>
       )}
-    </Background>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default memo(LoginScreen);

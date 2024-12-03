@@ -36,7 +36,11 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <PaperProvider theme={theme}>
         <SelectedDataProvider>
-          <Stack>
+          <Stack
+            screenOptions={{
+              contentStyle: { backgroundColor: '#eeeeee' },
+            }}
+          >
             <Stack.Screen
               name="(authentication)"
               options={{ headerShown: false }}
