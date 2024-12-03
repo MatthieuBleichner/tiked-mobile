@@ -1,22 +1,25 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { MD3Theme, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { Picker as PickerRNP } from '@react-native-picker/picker';
 
-interface PickerProps {
-  selectedValue: string | undefined;
-  onValueChange: ((itemValue: any, itemIndex: number) => void) | undefined;
+interface PickerProps<T> {
+  data: T[] | undefined;
+  renderItem: (item: T) => JSX.Element;
+  selectedValue: T | undefined;
+  onValueChange: ((itemValue: T, itemIndex?: number) => void) | undefined;
   placeholder: string;
 }
 
 export const Item: any = PickerRNP.Item;
 
-const Picker = ({
+const Picker = <T,>({
   selectedValue,
   onValueChange,
   placeholder,
-  children,
-}: PropsWithChildren<PickerProps>) => {
+  data,
+  renderItem,
+}: PickerProps<T>) => {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
@@ -31,13 +34,13 @@ const Picker = ({
         placeholder={placeholder}
         style={styles.picker}
       >
-        {children}
+        {(data ?? []).map((item) => renderItem(item))}
       </PickerRNP>
     </View>
   );
 };
 
-export default React.memo(Picker);
+export default Picker;
 
 const makeStyles = (theme: MD3Theme) =>
   StyleSheet.create({

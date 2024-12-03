@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 import { PaperProvider } from 'react-native-paper';
 import { theme } from '@/core/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SelectedDataProvider from '@/contexts/market/SelectedDataProvider';
 
 // import i18n (needs to be bundled ;))
 import '@/i18n';
@@ -34,19 +35,21 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <PaperProvider theme={theme}>
-        <Stack>
-          <Stack.Screen
-            name="(authentication)"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="citiesSelector"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="dashboard" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
+        <SelectedDataProvider>
+          <Stack>
+            <Stack.Screen
+              name="(authentication)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="citiesSelector"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="dashboard" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </SelectedDataProvider>
       </PaperProvider>
     </QueryClientProvider>
   );

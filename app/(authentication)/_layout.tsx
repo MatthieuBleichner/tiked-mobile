@@ -37,7 +37,6 @@ const LoginScreen = () => {
     onError: onAuthenticationError,
   });
 
-  console.log('mutation', mutation.isPending);
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -52,15 +51,7 @@ const LoginScreen = () => {
       id: email.value,
       password: password.value,
     });
-    //navigation.navigate('Dashboard');
   };
-
-  // useEffect(() => {
-  //   getItemAsync('secure_token').then((token) => {
-  //     console.log('token', token);
-  //     router.replace('/citiesSelector');
-  //   });
-  // }, []);
 
   return (
     <Background>
@@ -93,7 +84,11 @@ const LoginScreen = () => {
       {mutation.isPending ? (
         <ActivityIndicator />
       ) : (
-        <Button mode="contained" onPress={_onLoginPressed}>
+        <Button
+          mode="contained"
+          onPress={_onLoginPressed}
+          style={{ width: '90%' }}
+        >
           {t('Authentication.button.login')}
         </Button>
       )}

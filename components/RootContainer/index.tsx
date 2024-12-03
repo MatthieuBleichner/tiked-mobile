@@ -31,10 +31,13 @@ const makeStyles = (theme: MD3Theme) =>
   StyleSheet.create({
     surface: {
       padding: 8,
+      display: 'flex',
+      flex: 1,
       height: 300,
       width: '95%',
       borderRadius: 5,
       backgroundColor: '#f5f5f5',
+      //backgroundColor: 'red',
     },
     text: {
       fontSize: 20,
