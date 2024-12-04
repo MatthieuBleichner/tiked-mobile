@@ -36,11 +36,11 @@ const makeStyles = (theme: MD3Theme) =>
       height: 300,
       width: '95%',
       borderRadius: 10,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: theme.colors.surface,
       paddingHorizontal: 20,
     },
     text: {
-      fontSize: 35,
+      fontSize: 30,
       color: theme.colors.primary,
       fontWeight: 'bold',
     },

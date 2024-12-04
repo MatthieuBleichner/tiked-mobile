@@ -1,5 +1,10 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import {
+  ActivityIndicator,
+  MD3Theme,
+  Surface,
+  useTheme,
+} from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import Picker, { Item } from '@/components/Picker';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +15,11 @@ import Button from '@/components/Button';
 import { router } from 'expo-router';
 import useSelectedData from '@/contexts/market/useSelectedData';
 import Header from '@/components/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LoginScreen = () => {
   const theme = useTheme();
+  const styles = makeStyles(theme);
   const { setCurrentMarket, setCurrentCity } = useSelectedData();
   const [selectedCity, setPickerCurrentCity] = React.useState<ICity>();
   const [selectedMarket, setPickerCurrentMarket] = React.useState<IMarket>();
@@ -49,65 +56,81 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.background}>
-      <View
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flex: 1,
-          width: '100%',
-        }}
-      >
-        <Header>{t('CitiesSelector.title')}</Header>
-        <Picker
-          selectedValue={selectedCity}
-          onValueChange={handleCityChange}
-          placeholder="City"
-          data={cities}
-          renderItem={(city) => (
-            <Item
-              key={city.id}
-              label={city.name}
-              value={city}
-              color={theme.colors.primary}
+    <SafeAreaView>
+      <View style={styles.container}>
+        <Surface style={styles.surface} elevation={1}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              width: '100%',
+            }}
+          >
+            <Header>{t('CitiesSelector.title')}</Header>
+            <Picker
+              selectedValue={selectedCity}
+              onValueChange={handleCityChange}
+              placeholder="City"
+              data={cities}
+              renderItem={(city) => (
+                <Item
+                  key={city.id}
+                  label={city.name}
+                  value={city}
+                  color={theme.colors.primary}
+                />
+              )}
             />
-          )}
-        />
-        <Picker
-          selectedValue={selectedMarket}
-          onValueChange={handleMarketChange}
-          placeholder="Market"
-          data={markets}
-          renderItem={(market) => (
-            <Item
-              key={market.id}
-              label={market.name}
-              value={market}
-              color={theme.colors.primary}
+            <Picker
+              selectedValue={selectedMarket}
+              onValueChange={handleMarketChange}
+              placeholder="Market"
+              data={markets}
+              renderItem={(market) => (
+                <Item
+                  key={market.id}
+                  label={market.name}
+                  value={market}
+                  color={theme.colors.primary}
+                />
+              )}
             />
-          )}
-        />
-        {isCitiesLoading || isMarketsLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Button mode="contained" style={{ width: '50%' }} onPress={onPress}>
-            {t('CitiesSelector.button.continue')}
-          </Button>
-        )}
+            {isCitiesLoading || isMarketsLoading ? (
+              <ActivityIndicator />
+            ) : (
+              <Button
+                mode="contained"
+                style={{ width: '50%' }}
+                onPress={onPress}
+              >
+                {t('CitiesSelector.button.continue')}
+              </Button>
+            )}
+          </View>
+        </Surface>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: '100%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const makeStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    container: {
+      display: 'flex',
+      justifyContent: 'center',
+      height: '100%',
+    },
+    surface: {
+      width: '95%',
+      height: '50%',
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10,
+      backgroundColor: theme.colors.surface,
+    },
+  });
 
 export default memo(LoginScreen);
