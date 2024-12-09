@@ -1,19 +1,15 @@
 import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
-import { theme } from '../core/theme';
 
 type Props = React.ComponentProps<typeof PaperButton>;
 
-const Button = ({ mode, style, children, ...props }: Props) => (
+const Button = ({ style, children, ...props }: Props) => (
   <PaperButton
-    style={[
-      styles.button,
-      //mode === 'outlined' && { backgroundColor: theme.colors.primary },
-      style,
-    ]}
+    uppercase
+    style={[styles.button, style]}
+    mode="contained"
     labelStyle={styles.text}
-    mode={mode}
     {...props}
   >
     {children}
@@ -22,13 +18,15 @@ const Button = ({ mode, style, children, ...props }: Props) => (
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
-    marginVertical: 10,
+    display: 'flex',
+    //marginVertical: 2,
+    borderRadius: 5,
   },
   text: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    lineHeight: 26,
+    fontSize: 13,
+    lineHeight: 14,
+    textAlign: 'center',
+    marginHorizontal: 15,
   },
 });
 

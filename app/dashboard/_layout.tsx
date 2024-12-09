@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { FlatList, View } from 'react-native';
-import RootContainer from '@/components/RootContainer';
 import Clients from '@/components/Clients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -15,9 +14,7 @@ const Dashboard = () => {
         ]}
         renderItem={(card) => (
           <View style={{ marginTop: 15, width: '100%', alignItems: 'center' }}>
-            <RootContainer title={card.item.id}>
-              {card.item.comp ? <card.item.comp /> : null}
-            </RootContainer>
+            {card.item.comp ? <card.item.comp /> : <></>}
           </View>
         )}
         style={{ width: '100%', marginTop: 10 }}

@@ -3,5 +3,7 @@
     "Authentication.input.password": "Mot de passe",
     "Authentication.button.login": "Se connecter",
     "CitiesSelector.title": "Villes et marchés",
-    "CitiesSelector.button.continue": "Suivant"
+    "CitiesSelector.button.continue": "Suivant",
+    "Clients.title": "Clients",
+    "Clients.button": "Nouveau client"
 }

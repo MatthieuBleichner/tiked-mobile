@@ -1,15 +1,21 @@
 import React, { PropsWithChildren } from 'react';
 import { MD3Theme, Surface, Text, useTheme } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Button from '../Button';
+import { Button as PaperButton } from 'react-native-paper';
 
 interface RootContainerProps {
   title: string;
   centered?: boolean;
+  buttonText?: string;
+  onPressButton?: () => void;
 }
 
 const RootContainer = ({
   title,
   centered,
+  buttonText,
+  onPressButton,
   children,
 }: PropsWithChildren<RootContainerProps>) => {
   const theme = useTheme();
@@ -17,9 +23,21 @@ const RootContainer = ({
 
   return (
     <Surface style={styles.surface} elevation={1}>
-      <Text style={[styles.text, centered ? { textAlign: 'center' } : {}]}>
-        {title}
-      </Text>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 50,
+        }}
+      >
+        <Text style={[styles.text, centered ? { textAlign: 'center' } : {}]}>
+          {title}
+        </Text>
+        {buttonText && <Button onPress={onPressButton}>{buttonText}</Button>}
+      </View>
       {children}
     </Surface>
   );
@@ -43,5 +61,6 @@ const makeStyles = (theme: MD3Theme) =>
       fontSize: 30,
       color: theme.colors.primary,
       fontWeight: 'bold',
+      width: '50%',
     },
   });
