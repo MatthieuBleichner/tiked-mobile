@@ -55,7 +55,7 @@ const LoginScreen = () => {
     if (pickerCity && pickerMarket) {
       setCurrentCity(pickerCity);
       setCurrentMarket(pickerMarket);
-      router.replace('/dashboard');
+      router.push('./dashboard');
     }
   };
 
