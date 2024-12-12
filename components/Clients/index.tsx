@@ -1,15 +1,16 @@
 import useSelectedData from '@/contexts/market/useSelectedData';
-import { ICity, IClient } from '@/types/types';
+import { ICity, IClient, APIClient } from '@/types/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import React, { memo, Suspense, useCallback, useState } from 'react';
 import { getClientsQuery } from '@/api/clients/helpers';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useClientMutation } from '@/api/clients/hooks';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import Picker, { Item } from '../Picker';
 import { MD3Theme, Text, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import RootContainer from '../RootContainer';
 import { useTranslation } from 'react-i18next';
-
+import ClientsCreationModal from './ClientsCreationModal';
 interface ClientsSuspenseProps {
   currentCity: ICity;
 }
@@ -19,15 +20,27 @@ const ClientsSuspense: React.FC<ClientsSuspenseProps> = ({ currentCity }) => {
   const styles = makeStyles(theme);
   const { t } = useTranslation();
 
+  const queryClient = useQueryClient();
   const { queryKey, queryFn } = getClientsQuery(currentCity);
   const { data: clients = [] } = useSuspenseQuery<IClient[]>({
     queryKey,
     queryFn,
   });
 
+  const onAddClients = (newClients: IClient[]) =>
+    queryClient.setQueryData(queryKey, [...clients, ...newClients]);
+
+  const mutation = useClientMutation({
+    onSuccess: (data) => onAddClients(data),
+    onError: (error) => console.log('error', error),
+  });
+
+  const handleAddClient = (client: APIClient) => {
+    mutation.mutate(client);
+  };
+
   const [client, setClient] = useState<IClient>(clients[0]);
 
-  console.log('client', client);
   const renderItem = useCallback((client: IClient) => {
     return (
       <Item
@@ -39,8 +52,14 @@ const ClientsSuspense: React.FC<ClientsSuspenseProps> = ({ currentCity }) => {
     );
   }, []);
 
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
-    <RootContainer title={t('Clients.title')} buttonText={t('Clients.button')}>
+    <RootContainer
+      title={t('Clients.title')}
+      buttonText={t('Clients.button')}
+      onPressButton={() => setIsVisible(true)}
+    >
       <View
         style={{
           marginTop: 15,
@@ -65,6 +84,12 @@ const ClientsSuspense: React.FC<ClientsSuspenseProps> = ({ currentCity }) => {
           <Text style={styles.text}>{`Siret: ${client.siren}`}</Text>
         </View>
       </View>
+      <ClientsCreationModal
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
+        onAddClient={handleAddClient}
+        city={currentCity}
+      />
     </RootContainer>
   );
 };

@@ -2,8 +2,20 @@
     "Authentication.input.email": "Identifiant",
     "Authentication.input.password": "Mot de passe",
     "Authentication.button.login": "Se connecter",
+    "Button.validate": "Valider",
+    "Button.cancel": "annuler",
     "CitiesSelector.title": "Villes et marchés",
     "CitiesSelector.button.continue": "Suivant",
     "Clients.title": "Clients",
-    "Clients.button": "Nouveau client"
+    "Clients.button": "Nouveau client",
+    "Clients.modal.title": "Nouveau client",
+    "Clients.modal.separator.activity": "Activité",
+    "Clients.modal.separator.identity": "Identité",
+    "Clients.modal.input.firstName": "Prénom",
+    "Clients.modal.input.lastName": "Nom de famille",
+    "Clients.modal.input.postalCode": "Code Postal",
+    "Clients.modal.input.city": "Ville",
+    "Clients.modal.input.address": "Adresse",
+    "Clients.modal.input.activity": "Activité",
+    "Clients.modal.input.siret": "Numéro de siret"
 }

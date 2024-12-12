@@ -54,10 +54,10 @@ const makeStyles = (theme: MD3Theme) =>
       borderColor: '#696969',
       marginBottom: 10,
       borderRadius: 5,
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.surface,
     },
     picker: {
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.surface,
       color: theme.colors.primary,
       width: '95%',
       height: '95%',

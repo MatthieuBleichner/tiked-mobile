@@ -26,6 +26,8 @@ export interface IClient {
   job?: string;
 }
 
+export type APIClient = Omit<IClient, 'id'> & Partial<Pick<IClient, 'id'>>;
+
 export enum DynamicUnit {
   NONE = 'none',
   METERS = 'meters',

@@ -1,20 +1,35 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, StyleProp, ViewStyle } from 'react-native';
 import { TextInput as Input } from 'react-native-paper';
 import { theme } from '../core/theme';
 
-type Props = React.ComponentProps<typeof Input> & { errorText?: string };
+type Props = React.ComponentProps<typeof Input> & {
+  errorText?: string;
+  error?: boolean;
+  style?: StyleProp<ViewStyle>;
+  required?: boolean;
+  label: string;
+};
 
-const TextInput = ({ errorText, ...props }: Props) => (
-  <View style={styles.container}>
+const TextInput = ({
+  errorText,
+  error,
+  required,
+  label,
+  style,
+  ...props
+}: Props) => (
+  <View style={[styles.container, style]}>
     <Input
       style={styles.input}
       selectionColor={theme.colors.primary}
       underlineColor="transparent"
       mode="outlined"
+      error={error}
+      label={required ? `${label} *` : label}
       {...props}
     />
-    {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
+    {error && errorText ? <Text style={styles.error}>{errorText}</Text> : null}
   </View>
 );
 

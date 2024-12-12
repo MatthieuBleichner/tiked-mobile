@@ -84,6 +84,7 @@ const LoginScreen = () => {
             }
             error={!!password.error}
             errorText={password.error}
+            autoCapitalize="none"
             secureTextEntry
           />
 

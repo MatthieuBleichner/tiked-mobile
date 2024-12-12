@@ -2,7 +2,7 @@ import { useSuspenseQuery, useMutation } from '@tanstack/react-query';
 import { formatResponse, formatQueryData } from '../utils';
 import { config } from '@/config';
 
-import { IClient, ICity } from '@/types/types';
+import { IClient, ICity, APIClient } from '@/types/types';
 import { getClientsQuery } from './helpers';
 import { getItemAsync } from 'expo-secure-store';
 
@@ -19,12 +19,13 @@ interface useClientMutationParams {
   onSuccess?: (arg0: IClient[]) => void;
   onError?: (arg0: Error) => void;
 }
+
 export const useClientMutation = ({
   onSuccess,
   onError,
 }: useClientMutationParams) => {
   return useMutation({
-    mutationFn: async (newClient: IClient) => {
+    mutationFn: async (newClient: APIClient) => {
       const token = await getItemAsync('secure_token');
       const requestOptions = {
         method: 'POST',
