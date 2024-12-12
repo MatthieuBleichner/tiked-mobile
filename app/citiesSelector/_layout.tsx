@@ -21,18 +21,18 @@ const LoginScreen = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const { setCurrentMarket, setCurrentCity } = useSelectedData();
-  const [selectedCity, setPickerCurrentCity] = React.useState<ICity>();
-  const [selectedMarket, setPickerCurrentMarket] = React.useState<IMarket>();
+  const [pickerCity, setPickerCity] = React.useState<ICity>();
+  const [pickerMarket, setPickerMarket] = React.useState<IMarket>();
 
   const handleCityChange = (city: ICity) => {
     if (city) {
-      setPickerCurrentCity(city);
+      setPickerCity(city);
     }
   };
 
   const handleMarketChange = (market: IMarket) => {
     if (market) {
-      setPickerCurrentMarket(market);
+      setPickerMarket(market);
     }
   };
 
@@ -41,16 +41,20 @@ const LoginScreen = () => {
   const { data: cities, isLoading: isCitiesLoading } = useCitiesQuery();
 
   useEffect(() => {
-    if (cities) setPickerCurrentCity(cities[0]);
+    if (cities) setPickerCity(cities[0]);
   }, [cities]);
 
   const { data: markets, isLoading: isMarketsLoading } =
-    useMarketsQuery(selectedCity);
+    useMarketsQuery(pickerCity);
+
+  useEffect(() => {
+    if (markets) setPickerMarket(markets[0]);
+  }, [markets]);
 
   const onPress = () => {
-    if (selectedCity && selectedMarket) {
-      setCurrentCity(selectedCity);
-      setCurrentMarket(selectedMarket);
+    if (pickerCity && pickerMarket) {
+      setCurrentCity(pickerCity);
+      setCurrentMarket(pickerMarket);
       router.replace('/dashboard');
     }
   };
@@ -70,7 +74,7 @@ const LoginScreen = () => {
           >
             <Header>{t('CitiesSelector.title')}</Header>
             <Picker
-              selectedValue={selectedCity}
+              selectedValue={pickerCity}
               onValueChange={handleCityChange}
               placeholder="City"
               data={cities}
@@ -84,7 +88,7 @@ const LoginScreen = () => {
               )}
             />
             <Picker
-              selectedValue={selectedMarket}
+              selectedValue={pickerMarket}
               onValueChange={handleMarketChange}
               placeholder="Market"
               data={markets}
